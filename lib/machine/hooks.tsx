@@ -32,8 +32,10 @@ export function useMachine(machine: Machine, initalContext = {}) {
             const transitionsForName = transitions.get(transitionName)
             if (transitionsForName) {
                 for (const transition of transitionsForName) {
+                    
                     if (
                         (transition.guards &&
+                            // @ts-ignore: Unreachable code error
                             transition.guards(service.context)) ||
                         !transition.guards
                     ) {
