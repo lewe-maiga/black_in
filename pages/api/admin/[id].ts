@@ -34,7 +34,6 @@ export default async function adminRoute(
 
                     if (password) {
                         const hash = encrypt(password)
-                        console.log(hash)
                         result = {...admin._doc, ...req.body, password: hash}
                     } else {
                         result = {...admin._doc, ...req.body}

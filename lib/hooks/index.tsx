@@ -38,11 +38,9 @@ export function useToken() {
     }, []);
     const [state, setState] = useState(getToken);
     useEffect(() => {
-        console.log("render");
         const exp = new Date(state?.expiredAt);
         const now = new Date();
         if (exp < now) {
-            console.log("expired");
             sessionStorage.removeItem(tokenString);
             setState(null);
         }

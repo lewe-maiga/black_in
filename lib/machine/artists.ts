@@ -30,21 +30,18 @@ export default createMachine(
         ),
         loading: invoke(
             async (ctx: any) => {
-                console.log("ctx: ", ctx);
                 const response = await fetcher(`/api/artists/${ctx._id}`);
                 return response.artist;
             },
             transition(
                 "done",
                 "success",
-                reduce((ctx: any, ev: any) => {
-                    console.log(ctx, ev);
-                    return {
+                reduce((ctx: any, ev: any) => ({
                         ...ctx,
                         ...ev.data,
-                    };
+                    
                 })
-            ),
+            )),
 
             transition(
                 "error",

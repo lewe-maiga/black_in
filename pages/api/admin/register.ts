@@ -14,7 +14,6 @@ export default async function register(
         await dbConnect()
 
         if (req.method === "POST") {
-            console.log("token", mySecretToken)
             const {email, password} = req.body
             const wrongUserPassMsg = "Incorrect username and/or password."
             if (!email) {

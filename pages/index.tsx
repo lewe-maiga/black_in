@@ -1,6 +1,6 @@
 import type {GetStaticProps} from "next";
-import {fetcher, getFileLink} from "@lib/utils";
-import {Description} from "@database/models/description";
+import {getFileLink, parser} from "@lib/utils";
+import DescriptionModel, {Description} from "@database/models/description";
 import type {Beats} from "@database/models/beats";
 import {Cards} from "@components/card/cards";
 import {ReactElement} from "react";
@@ -13,16 +13,16 @@ import Image from "next/image";
 import {Artists} from "@components/artists/artists";
 import {Footer} from "@components/layout/footer";
 import {AudioProvider} from "@components/audio/provider";
-import { Artists as Artist } from "@database/models/artists";
-
+import ArtistModel,{ Artists as Artist } from "@database/models/artists";
+import { dbConnect } from "@database/mongodb";
+import BeatsModel from "@database/models/beats"
 type HomeProps = {
     description: Description;
     beats: Beats[];
     artists: Artist[]
 };
 
-const endpointDescription = "/api/description";
-const endpointBeats = "/api/beats";
+
 
 const Home = ({description, beats, artists}: HomeProps) => {
     return (
@@ -325,13 +325,16 @@ const Home = ({description, beats, artists}: HomeProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const server = process.env.HOST ?? "http://localhost:3000";
-    const description = await fetcher(`${server}${endpointDescription}`);
-    const {beats} = await fetcher(`${server}${endpointBeats}?limit=3`);
-    const {artists} = await fetcher(`${server}/api/artists`);
+    await dbConnect();
+    const beats = await BeatsModel.find({published: {$eq: true}})
+                        .limit(3)
+                        
+                    
+    const description = await DescriptionModel.find()
+    const artists = await ArtistModel.find()
     
     return {
-        props: {description, beats, artists},
+        props: {description: parser(description[0]), beats: parser(beats), artists: parser(artists)},
         revalidate: 1,
     };
 };

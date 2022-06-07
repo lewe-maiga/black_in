@@ -3,9 +3,9 @@ import {Container} from "@components/container/container";
 import {Header} from "@components/layout/header";
 import {ReactElement} from "react";
 
-type AboutMeProps = {};
 
-const AboutMe = ({}: AboutMeProps) => {
+
+const AboutMe = () => {
     return (
         <>
             <div></div>

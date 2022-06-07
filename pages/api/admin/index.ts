@@ -13,8 +13,6 @@ export default async function adminRoute(
         const count = await Admin.countDocuments({}).then(
             (response: any) => response
         )
-        console.log(count)
-
         switch (req.method) {
             case "POST": {
                 if (count >= 1) {
@@ -66,7 +64,6 @@ export default async function adminRoute(
                 break
         }
     } catch (error) {
-        console.log(error)
         res.status(500).json({error})
     }
 }

@@ -49,7 +49,6 @@ export const useAudio = (track: Beats) => {
     }, [volume]);
 
     useEffect(() => {
-        console.log(isSeeking);
         pause();
         audio.current.currentTime = Math.round((drag * duration) / 100);
     }, [drag]);
@@ -74,10 +73,7 @@ export const useAudio = (track: Beats) => {
             navigator.mediaSession.setActionHandler("seekbackward", (details) => audio.current.currentTime -= details.seekOffset || 10 )
             navigator.mediaSession.setActionHandler("seekforward", (details) => audio.current.currentTime += details.seekOffset || 10 )    
         }
-        
-       
-
-    },[track._id])
+    },[track._id, track.image.key, track.image.type, track.title])
 
     const play = () => {
         setIsPlaying(false);

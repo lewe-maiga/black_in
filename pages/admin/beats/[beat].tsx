@@ -1,7 +1,7 @@
 import {NeastedLayout} from "@components/admin/nested-layout";
 import {Spinner} from "@components/spinner";
-import {Beats} from "@database/models/beats";
-import {fetcher} from "@lib/utils";
+import BeatsModel, {Beats} from "@database/models/beats";
+import {fetcher, parser} from "@lib/utils";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {ChangeEvent, ReactElement, useEffect, useState} from "react";
 import useSWR from "swr";
@@ -12,6 +12,7 @@ import {File as FileBeat} from "@lib/s3";
 import {useMachine} from "@lib/machine/hooks";
 import machine from "@lib/machine/beats";
 import {Header} from "@components/admin/header";
+import { dbConnect } from "@database/mongodb";
 
 type BeatProps = {
     _beat: {beat: Beats};
@@ -43,11 +44,9 @@ const Beat = ({_beat, _id}: BeatProps) => {
     const {loading, dispatch} = useLoading();
 
     useEffect(() => {
-        console.log();
         if (stateMachine === "idle") {
             send("edit");
         }
-        console.log(stateMachine);
     }, [stateMachine]);
 
     useEffect(() => {
@@ -77,8 +76,6 @@ const Beat = ({_beat, _id}: BeatProps) => {
 
             const endpoint = `/api/beats/${_id}`;
 
-            console.log(data.beat.published);
-
             const body = {
                 published: !data.beat.published,
             };
@@ -98,8 +95,8 @@ const Beat = ({_beat, _id}: BeatProps) => {
             } else {
                 throw new Error(await response.json());
             }
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.error(err);
         } finally {
             dispatch({type: "done"});
         }
@@ -118,8 +115,6 @@ const Beat = ({_beat, _id}: BeatProps) => {
             image: Object.keys(image).length !== 0 ? image : data.beat.image,
             music: Object.keys(music).length !== 0 ? music : data.beat.music,
         };
-
-        console.log("state: ", state);
 
         const response = await fetch(endpoint, {
             method: "PUT",
@@ -294,23 +289,23 @@ const Beat = ({_beat, _id}: BeatProps) => {
     );
 };
 
-const server = process.env.HOST;
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const _id = params?.beat as string;
-    const _beat = await fetcher(`${server}/api/beats/${_id}`);
+    await dbConnect()
+    const id = params?.beat as string;
+    const beat = await BeatsModel.findOne({_id: id})
     return {
-        props: {_beat, _id},
+        props: {_beat: { beat : parser(beat)}, _id: id},
     };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {beats} = await fetcher(`${server}/api/beats?all`);
+    await dbConnect()
+    let beats = await BeatsModel.find()
     const beat =
-        beats.map(({_id}: {_id: string}) => ({
+        parser(beats.map(({_id}: {_id: string}) => ({
             params: {beat: _id},
-        })) ?? [];
-
+        })) ?? [])    
     return {
         paths: beat,
         fallback: false,

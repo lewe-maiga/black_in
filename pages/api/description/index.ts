@@ -15,8 +15,6 @@ export default async function description(
                 const count = await Description.countDocuments({}).then(
                     (response) => response
                 )
-                console.log(count)
-
                 if (count === 0) {
                     const createDescription = new Description({
                         ...req.body,

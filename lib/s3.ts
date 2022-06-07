@@ -98,7 +98,6 @@ const save = async (file: FileInput): Promise<File> => {
             size: data.size,
         };
     } catch (error) {
-        console.log(error);
         throw error;
     }
 };
@@ -111,9 +110,6 @@ export const upload = async (req: NextApiRequest) => {
             uploadDir: "",
         });
         form.parse(req, async (err, _, files) => {
-            console.log("name", files);
-            if (err) reject(err);
-            console.log(Object.keys(files).length);
             switch (Object.keys(files).length) {
                 case 0:
                     reject("file required");

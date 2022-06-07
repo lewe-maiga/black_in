@@ -10,7 +10,6 @@ export default async function albumRoute(
         await dbConnect()
         const {id} = req.query
         const album = await Albums.findOne({_id: id}).then((data) => data)
-        console.log(album)
 
         if (album) {
             switch (req.method) {
@@ -42,7 +41,6 @@ export default async function albumRoute(
             }
         } else res.status(404).json({album})
     } catch (error) {
-        console.log("error", error)
         res.status(500).json({error})
     }
 }

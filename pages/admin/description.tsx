@@ -1,15 +1,16 @@
 import { useLoading, useToken } from "@lib/hooks";
-import { fetcher } from "@lib/utils";
+import { fetcher, parser } from "@lib/utils";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import {Description as Desc} from "@database/models/description";
+import DescriptionModel, {Description as Desc} from "@database/models/description";
 import { ReactElement, useEffect, useState } from "react";
 import { useMachine } from "@lib/machine/hooks";
 import machine from "@lib/machine";
 import { Spinner } from "@components/spinner";
 import { NeastedLayout } from "@components/admin/nested-layout";
 import Link from "next/link";
+import { dbConnect } from "@database/mongodb";
 
 
 type DescriptionProps = {
@@ -48,7 +49,7 @@ const Description = ({description}: DescriptionProps ) => {
 
         dispatch({type: "loading"});
 
-        const data = {
+        const body = {
             heading_main: content.n_heading_main,
             content_main: content.n_content_main,
             heading_secondary: content.n_heading_secondary,
@@ -60,7 +61,7 @@ const Description = ({description}: DescriptionProps ) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(body),
         };
         const endpoint = "/api/description";
         const response = await fetch(endpoint, options);
@@ -306,18 +307,13 @@ const Description = ({description}: DescriptionProps ) => {
 
 
 
-const server = process.env.HOST;
 
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
-    console.log(params);
-
-    const description = await fetcher(`${server}/api/description`)
-        .then((res) => res)
-        .catch((err) => {
-            throw err;
-        });
-
+export const getStaticProps: GetStaticProps = async () => {
+    await dbConnect()
+    let description = await DescriptionModel.find()
+    description = parser(description[0])
+    
     return {
         props: {description},
     };

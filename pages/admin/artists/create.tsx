@@ -48,8 +48,6 @@ const Create = () => {
             content: state.content,
         };
 
-        console.log("state: ", state);
-
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
@@ -60,7 +58,6 @@ const Create = () => {
         });
         if (response.ok) {
             const {artist} = await response.json();
-            console.log(artist);
             router.push(`/admin/artists/${artist._id}`);
         }
         dispatch({type: "done"});

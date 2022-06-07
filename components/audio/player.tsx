@@ -1,7 +1,7 @@
 import {Beats} from "@database/models/beats";
-import {getFileLink, getS3FileLink} from "@lib/utils";
+import {getFileLink} from "@lib/utils";
 import Image from "next/image";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Bar} from "./bar";
 import {Control} from "./control";
 import {useAudio} from "./hooks";
@@ -11,7 +11,6 @@ type PlayerProps = {track: Beats};
 export const Player = ({track}: PlayerProps) => {
     //music attribut
     const {
-        music: {key},
         title,
         image,
         genre,
@@ -29,9 +28,6 @@ export const Player = ({track}: PlayerProps) => {
     } = useAudio(track);
     const [checked, setChecked] = useState(true);
 
-    useEffect(() => {
-        console.log(checked);
-    }, [checked]);
     return (
         <>
             <input

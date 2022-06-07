@@ -1,14 +1,15 @@
 import {NeastedLayout} from "@components/admin/nested-layout";
 import {Spinner} from "@components/spinner";
-import {Artists as Artist} from "@database/models/artists";
+import ArtistsModel, {Artists as Artist} from "@database/models/artists";
 import {useToken} from "@lib/hooks";
-import {fetcher, getFileLink} from "@lib/utils";
+import {fetcher, getFileLink, parser} from "@lib/utils";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {ChangeEvent, ReactElement, useEffect, useState} from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import {GetStaticProps} from "next";
+import { dbConnect } from "@database/mongodb";
 
 type ArtistsProps = {
     _artists: {artists: Artist[]};
@@ -50,8 +51,6 @@ const Artists = ({_artists}: ArtistsProps) => {
 
         if (response.ok) {
             const artists = await response.json();
-            console.log(artists);
-
             mutate({...artists});
         }
     };
@@ -343,14 +342,12 @@ const Artists = ({_artists}: ArtistsProps) => {
 const server = process.env.HOST;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const _artists = await fetcher(`${server}/api/artists`)
-        .then((res) => res)
-        .catch((err) => {
-            throw err;
-        });
+    await dbConnect();
+    const _artists = await ArtistsModel.find();
+        
 
     return {
-        props: {_artists},
+        props: {_artists: { artists: parser(_artists)}},
     };
 };
 

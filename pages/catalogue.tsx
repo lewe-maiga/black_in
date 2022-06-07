@@ -3,15 +3,11 @@ import {Cards} from "@components/card/cards";
 import {Container} from "@components/container/container";
 import {Header} from "@components/layout/header";
 import {ReactElement} from "react";
-import {Player} from "@components/audio/player";
-import {useAudioContext} from "@components/audio/hooks";
 
 const Catalogue = () => {
-    // const {selected} = useAudioContext();
 
     return (
         <>
-            {/* {Object.keys(selected).length !== 0 && <Player track={selected} />} */}
             <div className="square-bg"></div>
             <div className="filter"></div>
             <Cards />

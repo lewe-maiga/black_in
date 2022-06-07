@@ -45,6 +45,7 @@ export default async function artistsRoute(
                 break
         }
     }catch(err){
+        console.error(err)
         throw err;
     }
 }

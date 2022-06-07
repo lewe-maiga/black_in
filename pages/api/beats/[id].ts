@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next"
-import Beats, {Beats as Beat} from "@database/models/beats"
+import Beats from "@database/models/beats"
 import {dbConnect} from "@database/mongodb"
 import {auth} from "@lib/middleware/auth"
 

@@ -1,17 +1,18 @@
 import {NeastedLayout} from "@components/admin/nested-layout";
 import {Header} from "@components/admin/header";
 import {Spinner} from "@components/spinner";
-import {Artists} from "@database/models/artists";
+import ArtistsModel, {Artists} from "@database/models/artists";
 import {useLoading, useToken} from "@lib/hooks";
 import machine from "@lib/machine/artists";
 import {useMachine} from "@lib/machine/hooks";
-import {fetcher} from "@lib/utils";
+import {fetcher, parser} from "@lib/utils";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import {ChangeEvent, ReactElement, useEffect, useState} from "react";
 import useSWR from "swr";
 import {File} from "@components/admin/file";
 import {File as FileBeat} from "@lib/s3";
+import { dbConnect } from "@database/mongodb";
 
 type ArtistProps = {
     _artist: {artist: Artists};
@@ -39,11 +40,9 @@ const Artist = ({_artist, _id}: ArtistProps) => {
     const {loading, dispatch} = useLoading();
 
     useEffect(() => {
-        console.log();
         if (stateMachine === "idle") {
             send("edit");
         }
-        console.log(stateMachine);
     }, [stateMachine]);
 
     useEffect(() => {
@@ -57,7 +56,6 @@ const Artist = ({_artist, _id}: ArtistProps) => {
 
     useEffect(() => {
         send("input", state);
-        console.log("state: ", state, data.artist);
     }, [state]);
 
     const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -72,9 +70,6 @@ const Artist = ({_artist, _id}: ArtistProps) => {
             dispatch({type: "loading"});
 
             const endpoint = `/api/artists/${_id}`;
-
-            console.log(data.artist.published);
-
             const body = {
                 published: !data.artist.published,
             };
@@ -94,25 +89,20 @@ const Artist = ({_artist, _id}: ArtistProps) => {
             } else {
                 throw new Error(await response.json());
             }
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.error(err);
         } finally {
             dispatch({type: "done"});
         }
     };
     const onSubmitForm = async () => {
         dispatch({type: "loading"});
-
         const endpoint = `/api/artists/${_id}`;
-
         const body = {
             pseudo: state.n_pseudo,
             content: state.n_content,
             image: Object.keys(image).length !== 0 ? image : data.artist.image,
         };
-
-        console.log("state: ", state);
-
         const response = await fetch(endpoint, {
             method: "PUT",
             headers: {
@@ -259,22 +249,23 @@ const Artist = ({_artist, _id}: ArtistProps) => {
         </>
     );
 };
-const server = process.env.HOST;
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const _id = params?.artist as string;
-    const _artist = await fetcher(`${server}/api/artists/${_id}`);
+    await dbConnect()
+    const id = params?.artist as string;
+    const _artist = await ArtistsModel.findOne({_id: id});
     return {
-        props: {_artist, _id},
+        props: {_artist: {artist: parser(_artist)}, _id: id},
     };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {artists} = await fetcher(`${server}/api/artists`);
+    await dbConnect()
+    const artists = await ArtistsModel.find();
     const artist =
-        artists.map(({_id}: {_id: string}) => ({
+        parser(artists.map(({_id}: {_id: string}) => ({
             params: {artist: _id},
-        })) ?? [];
+        })) ?? []);
 
     return {
         paths: artist,

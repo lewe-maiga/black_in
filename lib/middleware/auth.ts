@@ -10,9 +10,7 @@ export const auth = async (req: NextApiRequest, res: NextApiResponse) => {
             reject("No token")
         } else {
             const token = req.headers.authorization.split(" ")[1]
-            console.log(token)
             const payload = verify(token, mySecretToken)
-            console.log(payload)
             resolve({payload})
         }
     })

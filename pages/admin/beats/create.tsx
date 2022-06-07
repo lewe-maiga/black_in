@@ -26,11 +26,6 @@ const Create = () => {
     const {loading, dispatch} = useLoading();
     const [isPublish, setPublish] = useState(false);
 
-    useEffect(() => {
-        console.log("image", image);
-        console.log("music", music);
-    }, [image, music]);
-
     const inputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -54,8 +49,6 @@ const Create = () => {
             music,
         };
 
-        console.log("state: ", state);
-
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
@@ -66,7 +59,6 @@ const Create = () => {
         });
         if (response.ok) {
             const {beat} = await response.json();
-            console.log(beat);
             router.push(`/admin/beats/${beat._id}`);
         }
         dispatch({type: "done"});

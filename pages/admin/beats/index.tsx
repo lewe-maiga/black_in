@@ -1,14 +1,15 @@
 import type {GetStaticProps} from "next";
-import {fetcher, getFileLink} from "@lib/utils";
+import {fetcher, getFileLink, parser} from "@lib/utils";
 import {ChangeEvent, ReactElement, useEffect, useState} from "react";
 import {useToken} from "@lib/hooks";
 import {useRouter} from "next/router";
 import {Spinner} from "@components/spinner";
-import {Beats} from "@database/models/beats";
+import BeatsModel, {Beats} from "@database/models/beats";
 import useSWR from "swr";
 import Image from "next/image";
 import {NeastedLayout} from "@components/admin/nested-layout";
 import Link from "next/link";
+import { dbConnect } from "@database/mongodb";
 
 type AdminProps = {
     _beats: {beats: Beats[]};
@@ -32,9 +33,7 @@ const Admin = ({_beats}: AdminProps) => {
         if (data) setState(data.beats);
     }, [data]);
 
-    useEffect(() => {
-        console.log("checked", checked);
-    }, [checked]);
+   
 
     const onDeleteBeat = async () => {
         const endpoint = "/api/beats";
@@ -54,8 +53,6 @@ const Admin = ({_beats}: AdminProps) => {
 
         if (response.ok) {
             const beats = await response.json();
-            console.log(beats);
-
             mutate({...beats});
         }
     };
@@ -344,17 +341,14 @@ const Admin = ({_beats}: AdminProps) => {
     );
 };
 
-const server = process.env.HOST;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const _beats = await fetcher(`${server}/api/beats`)
-        .then((res) => res)
-        .catch((err) => {
-            throw err;
-        });
+    await dbConnect()
+    const _beats = await BeatsModel.find()
+
 
     return {
-        props: {_beats},
+        props: {_beats: { beats: parser(_beats)}}
     };
 };
 

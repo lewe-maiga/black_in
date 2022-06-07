@@ -1,7 +1,7 @@
 import {useAudioContext} from "@components/audio/hooks";
 import {Player} from "@components/audio/player";
 import {cssUnitHelper} from "@lib/utils";
-import {ReactChild, ReactChildren, useEffect} from "react";
+import {ReactChild, ReactChildren} from "react";
 
 type ContainerProps = {
     width?: string | number;
@@ -17,10 +17,6 @@ export const Container = ({
     const sizeHeight = cssUnitHelper(height);
     const sizeWidth = cssUnitHelper(width);
     const {selected} = useAudioContext();
-
-    useEffect(() => {
-        console.log(selected);
-    }, [selected]);
     return (
         <>
             <div className="container">

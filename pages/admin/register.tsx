@@ -1,8 +1,7 @@
-import {SignIn} from "components/admin/sign-in";
+
 import {Login} from "components/admin/login";
 import {useEffect} from "react";
 import {useToken} from "@lib/hooks";
-import {GetStaticProps} from "next";
 import {fetcher} from "@lib/utils";
 import useSWR from "swr";
 import {useRouter} from "next/router";

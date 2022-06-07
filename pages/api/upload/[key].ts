@@ -1,10 +1,9 @@
 import {auth} from "@lib/middleware/auth";
-import {File, getFile, removeFile, upload} from "@lib/s3";
+import {getFile, removeFile, upload} from "@lib/s3";
 import type {NextApiRequest, NextApiResponse} from "next";
 export default async function keys(req: NextApiRequest, res: NextApiResponse) {
     try {
         const {key} = req.query;
-        console.log(key);
         switch (req.method) {
             case "GET": {
                 if (typeof key === "string") {
@@ -30,13 +29,8 @@ export default async function keys(req: NextApiRequest, res: NextApiResponse) {
             case "PUT": {
                 await auth(req, res);
                 if (typeof key === "string") {
-                    console.log("key: ", key);
-                    console.log("query: ", req.body);
-
                     await removeFile(key);
-
                     const file = await upload(req).then((data: any) => data);
-
                     res.status(200).json({...file});
                 }
                 break;
@@ -46,7 +40,7 @@ export default async function keys(req: NextApiRequest, res: NextApiResponse) {
                 break;
         }
     } catch (error) {
-        console.log(error);
+        console.error(error)
         throw error;
     }
 }

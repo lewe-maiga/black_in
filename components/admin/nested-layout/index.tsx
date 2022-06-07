@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {ReactChild, ReactElement, useEffect} from "react";
+import {ReactChild, ReactElement} from "react";
 
 export const NeastedLayout = ({
     children,
@@ -8,11 +8,6 @@ export const NeastedLayout = ({
     children: ReactElement | ReactChild;
 }) => {
     const router = useRouter();
-
-    useEffect(() => {
-        console.log(router);
-    }, []);
-
     return (
         <>
             <div className="global-container">

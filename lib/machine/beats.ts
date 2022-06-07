@@ -42,7 +42,6 @@ export default createMachine(
         ),
         loading: invoke(
             async (ctx: any) => {
-                console.log("ctx: ", ctx);
 
                 const response = await fetcher(`/api/beats/${ctx._id}`);
                 return response.beat;
@@ -50,14 +49,12 @@ export default createMachine(
             transition(
                 "done",
                 "success",
-                reduce((ctx: any, ev: any) => {
-                    console.log(ctx, ev);
-                    return {
+                reduce((ctx: any, ev: any) => ({
                         ...ctx,
                         ...ev.data,
-                    };
+                    
                 })
-            ),
+            )),
 
             transition(
                 "error",

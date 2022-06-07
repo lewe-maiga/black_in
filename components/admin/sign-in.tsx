@@ -60,8 +60,6 @@ export const SignIn = ({mutate, setToken, type, router}: SignInProps) => {
             const response = await fetch(endpoint, option)
             if (response.ok) {
                 const {admin} = await response.json()
-                console.log(admin)
-
                 const register = await fetch("/api/admin/register", {
                     body: JSON.stringify({
                         email: data.email,
@@ -70,26 +68,24 @@ export const SignIn = ({mutate, setToken, type, router}: SignInProps) => {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                 })
-                console.log(register)
                 if (register.ok) {
                     const {token} = await register.json()
-                    console.log(token)
                     setToken(token)
                     mutate()
                     router.push(`/admin/${admin._id}`)
                 } else {
                     const {error} = await register.json()
-                    console.log(error)
+                    throw new Error(error)
                 }
             } else {
                 const {error} = await response.json()
-                console.log(error)
+                throw new Error(error)
+                
             }
         } catch (error) {
-            console.log(error)
+        console.error(error)
             throw error
         }
-        //console.log(data)
     }
     return (
         <>

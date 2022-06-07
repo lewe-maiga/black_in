@@ -12,3 +12,7 @@ export const getFileLink = (key: string) => {
 export const getS3FileLink = (key: string) =>{
     return `https://black-industry.s3.eu-west-3.amazonaws.com/${key}`;
 }    
+
+export function parser<T>(data: T): T{
+    return JSON.parse(JSON.stringify(data));
+} 

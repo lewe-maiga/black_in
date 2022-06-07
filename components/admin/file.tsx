@@ -68,7 +68,6 @@ export const File = ({
 
         formData.append(type, file as File);
 
-        console.log(endpoint);
 
         const response = await fetch(endpoint, {
             method: "PUT",
