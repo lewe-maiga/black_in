@@ -1,13 +1,8 @@
-import {directstyled, useDirectStyle} from "direct-styled";
 import {
     ChangeEventHandler,
     MouseEventHandler,
     TouchEventHandler,
-    useEffect,
-    useRef,
-    useState,
 } from "react";
-import {useDrag} from "react-use-gesture";
 
 type BarProps = {
     progress: number;
@@ -20,9 +15,7 @@ type BarProps = {
 
 export const Bar = ({
     progress,
-    duration,
     onChange,
-    currentTime,
     onMouseUp,
     onTouchEnd,
 }: BarProps) => {

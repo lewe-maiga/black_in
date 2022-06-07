@@ -44,8 +44,6 @@ export const Login = ({setToken, router}: LoginProps) => {
     };
     const onSubmit = async (event: SyntheticEvent) => {
         event.preventDefault();
-        console.log("submit");
-
         const endpoint = "/api/admin/register";
         const data = {
             email: state.email,
@@ -60,16 +58,12 @@ export const Login = ({setToken, router}: LoginProps) => {
             body: JSON.stringify(data),
         };
         const response = await fetch(endpoint, options);
-        console.log(response);
-
         if (response.ok) {
             const {token, _id} = await response.json();
-            console.log(token);
             setToken(token, _id);
             router.push(`/admin/dashboard`);
         } else {
             const {error: err} = await response.json();
-            console.log(error);
             setError({err: true, msg: err});
         }
     };

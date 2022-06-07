@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {Upload} from "@database/models/upload";
 import {getFileLink} from "@lib/utils";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {Spinner} from "@components/spinner";
 
 type Action = "create" | "update";
@@ -26,10 +26,7 @@ export const File = ({
 }: FileProps) => {
     const [file, setFile] = useState<File>();
     const [active, setActive] = useState(false);
-    useEffect(() => {
-        console.log(file);
-    }, [file]);
-
+    
     const toggleActive = () => {
         setActive(!active);
         if (file)
@@ -44,15 +41,9 @@ export const File = ({
     };
     const onCreateFile = async () => {
         dispatch({type: "loading"});
-
         const endpoint = "/api/upload";
-
         const formData = new FormData();
-
         formData.append(type, file as File);
-
-        console.log(endpoint);
-
         const response = await fetch(endpoint, {
             method: "POST",
             headers: {
@@ -61,11 +52,7 @@ export const File = ({
             body: formData,
         });
         if (response.ok) {
-            console.log(response);
             const upload = await response.json();
-            console.log(upload);
-            //console.log(await response.json());
-
             setState(upload.file);
         }
         setActive(!active);
@@ -91,9 +78,7 @@ export const File = ({
             body: formData,
         });
         if (response.ok) {
-            console.log(response);
             const {file: upload} = await response.json();
-            console.log(upload);
             setState(upload);
         }
         toggleActive();

@@ -40,7 +40,6 @@ export const Header = ({
                             </svg>
                         </a>
                     </Link>
-
                     <h1 className="title">{!title ? `Create ${backRoute}` : title}</h1>
                 </div>
                 <div className="action">

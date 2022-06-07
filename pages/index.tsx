@@ -325,10 +325,11 @@ const Home = ({description, beats, artists}: HomeProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const server = process.env.HOST;
+    const server = process.env.HOST ?? "http://localhost:3000";
     const description = await fetcher(`${server}${endpointDescription}`);
     const {beats} = await fetcher(`${server}${endpointBeats}?limit=3`);
-        const {artists} = await fetcher(`${server}/api/artists`);
+    const {artists} = await fetcher(`${server}/api/artists`);
+    
     return {
         props: {description, beats, artists},
         revalidate: 1,
