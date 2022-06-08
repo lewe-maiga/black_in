@@ -11,7 +11,7 @@ export const Control = ({isPlaying, play, pause}: ControlProps) => {
         <>
             <div className="control">
                 {isPlaying ? (
-                    <button className="icon" onClick={play}>
+                    <button className="icon" onClick={play} aria-label="lire la musique">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -26,7 +26,7 @@ export const Control = ({isPlaying, play, pause}: ControlProps) => {
                         </svg>
                     </button>
                 ) : (
-                    <button className="icon" onClick={pause}>
+                    <button className="icon" onClick={pause} aria-label="musique sur pause">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             xmlnsXlink="http://www.w3.org/1999/xlink"

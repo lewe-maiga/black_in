@@ -39,7 +39,7 @@ export const Slider = ({beats}: SliderProps) => {
                         <span className="image">
                             <Image
                                 src={getFileLink(beat.image.key)}
-                                alt={beat.image.name}
+                                alt={`cover de l'instrumental ${beat.image.name}`}
                                 layout="fill"
                                 objectFit="cover"
                                 priority
@@ -55,7 +55,7 @@ export const Slider = ({beats}: SliderProps) => {
                     .wrapper {
                         position: relative;
                         width: 100%;
-                        height: 250px;
+                        height: 300px;
                     }
 
                     ul {
@@ -92,12 +92,15 @@ export const Slider = ({beats}: SliderProps) => {
                     }
 
                     @media only screen and (min-width: 1000px) {
+                        .wrapper{
+                            height: 250px;
+                        }
                         ul {
-                            left: -15px;
+                            left: 0;
                             top: 20px;
-                            transform: translate(15%, 0);
+                            transform: translate(0%, 0);
                             padding: 20px;
-                            height: 100%;
+                            height: 90%;
                             width: 100%;
                             position: absolute;
                             transform-style: preserve-3d;
@@ -107,9 +110,9 @@ export const Slider = ({beats}: SliderProps) => {
                             position: absolute;
                             transform-style: preserve-3d;
                             transition: 1s;
-                            width: 55%;
+                            width: 60%;
                             max-width: 310px;
-                            height: 90%;
+                            height: 100%;
                             animation: none;
                         }
                         #list:nth-child(1) {
@@ -137,8 +140,10 @@ export const Slider = ({beats}: SliderProps) => {
 
                     @media only screen and (min-width: 1400px) {
                         ul {
-                            left: 0;
-                            //top: -15px;
+                            height: 100%;
+                            left: 0px;
+                            top: 20px;
+                            transform: translate(15%, 0);
                         }
                     }
 

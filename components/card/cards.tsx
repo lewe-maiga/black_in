@@ -55,7 +55,7 @@ export const Cards = ({
                 <ViewMore backward={handleBackward} forward={handleForward} />
             </div>
 
-            <div className="card-grid">
+            <ul className="card-grid">
                 {!data
                     ? Array(opts.end)
                           .fill(null)
@@ -63,7 +63,7 @@ export const Cards = ({
                     : dataSlice(data.beats, opts).map((beat) => (
                           <Card beat={beat} key={beat._id} />
                       ))}
-            </div>
+            </ul>
             <style jsx>
                 {`
                     .card-container {

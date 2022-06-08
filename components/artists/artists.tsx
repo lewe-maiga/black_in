@@ -58,7 +58,7 @@ export const Artists = ({artists, start = 0, end = 4}: ArtistsProps) => {
                             <span>
                                 <Image
                                     src={getFileLink(artist.image.key)}
-                                    alt=""
+                                    alt={`${artist.pseudo}`}
                                     objectFit="cover"
                                     layout="fill"
                                 />

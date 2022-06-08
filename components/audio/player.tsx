@@ -52,7 +52,7 @@ export const Player = ({track}: PlayerProps) => {
                         <Image
                             src={getFileLink(image.key)}
                             layout="fill"
-                            alt={`${title} en cours de lecture`}
+                            alt={`cover l'instrumental ${title} en cours de lecture`}
                             objectFit="cover"
                         />
                     </div>

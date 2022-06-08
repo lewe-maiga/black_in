@@ -16,6 +16,8 @@ import {AudioProvider} from "@components/audio/provider";
 import ArtistModel,{ Artists as Artist } from "@database/models/artists";
 import { dbConnect } from "@database/mongodb";
 import BeatsModel from "@database/models/beats"
+import { File } from "@lib/s3";
+import { Upload } from "@database/models/upload";
 type HomeProps = {
     description: Description;
     beats: Beats[];
@@ -23,6 +25,12 @@ type HomeProps = {
 };
 
 
+const ArtsistImage = ({image}: {image: Upload}) => <Image
+src={getFileLink(image.key)}
+alt={`${image.name}`}
+objectFit="cover"
+layout="fill"
+/>
 
 const Home = ({description, beats, artists}: HomeProps) => {
     return (
@@ -34,7 +42,7 @@ const Home = ({description, beats, artists}: HomeProps) => {
                     <p className="content_main">{description.content_main}</p>
                     <div className="btn-container">
                         <span className="btn">
-                            <Button width={180} text="Contactez Moi" />
+                            <Button width={180} text="Contactez Moi" color="#fff" backgroundColor="#111" />
                         </span>
                         <span className="btn">
                             <Button
@@ -90,32 +98,18 @@ const Home = ({description, beats, artists}: HomeProps) => {
                         <div className="wrapper">
                             <div className="image main">
                                 <span>
-                                    <Image
-                                        src={getFileLink(artists[Math.floor(Math.random() *  artists.length)].image.key)}
-                                        alt=""
-                                        objectFit="cover"
-                                        layout="fill"
-                                    />
+                                    <ArtsistImage image={artists[Math.floor(Math.random() *  artists.length)].image}/>
                                 </span>
                             </div>
                             <div className="image top">
                                 <span>
-                                    <Image
-                                        src={getFileLink(artists[Math.floor(Math.random() *  artists.length)].image.key)}
-                                        alt=""
-                                        objectFit="cover"
-                                        layout="fill"
-                                    />
+                                <ArtsistImage image={artists[Math.floor(Math.random() *  artists.length)].image}/>
+
                                 </span>
                             </div>
                             <div className="image bottom">
                                 <span>
-                                    <Image
-                                        src={getFileLink(artists[Math.floor(Math.random() *  artists.length)].image.key)}
-                                        alt=""
-                                        objectFit="cover"
-                                        layout="fill"
-                                    />
+                                <ArtsistImage image={artists[Math.floor(Math.random() *  artists.length)].image}/>
                                 </span>
                             </div>
                         </div>
@@ -239,11 +233,10 @@ const Home = ({description, beats, artists}: HomeProps) => {
                     .description.main {
                         display: grid;
                         grid-template-columns: 1fr;
-                        grid-template-rows: 1.7fr 1fr;
+                        grid-template-rows: 1fr 1fr;
                         grid-gap: 10px;
                         max-width: var(--max-grid-width);
                         justify-content: center;
-                        padding-bottom: 30px;
                         min-height: 285px;
                         flex: 1;
                         border-bottom: 1px dashed ${theme.colors.border};
@@ -263,7 +256,7 @@ const Home = ({description, beats, artists}: HomeProps) => {
                         max-height: 150px;
                         width: 100%;
                         margin: 10px 0;
-                        font-size: 16px;
+                        font-size: clamp(12px, 4vh,14px);
                         overflow: hidden;
                         text-overflow: ellipsis;
                     }
@@ -285,10 +278,6 @@ const Home = ({description, beats, artists}: HomeProps) => {
                         flex-direction: column;
                     }
                     @media only screen and (min-width: 375px) {
-                        .description.main {
-                            grid-template-rows: 1fr 1fr;
-                            grid-gap: 10px;
-                        }
                         .container-image {
                             padding-right: 15px;
                         }
@@ -299,6 +288,8 @@ const Home = ({description, beats, artists}: HomeProps) => {
                             grid-template-rows: none;
                             grid-template-columns: 1fr 1fr;
                             margin: 0 auto 15px;
+                            padding-bottom: 50px;
+
                         }
                         .description.secondary {
                             display: grid;

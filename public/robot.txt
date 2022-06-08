@@ -1,0 +1,8 @@
+#Allow all crowlers for /api and /admin
+User-agent: *
+Disallow: /api/*
+User-agent: *
+Disallow: /admin/*
+# Allow all user agents.
+User-agent: *
+Allow: /

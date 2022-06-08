@@ -1,20 +1,21 @@
 import type {Beats} from "@database/models/beats";
 import Image from "next/image";
-import theme from "@styles/themes";
-
+import useDimensions from "react-cool-dimensions"
 import {useAudioContext} from "@components/audio/hooks";
 import { getFileLink } from "@lib/utils";
 
 export const Card = ({beat}: {beat?: Beats}) => {
+    const {observe, width} = useDimensions()
     const {toggleAudioUrl} = useAudioContext();
     return (
         <>
             {beat ? (
                 <li className="card">
-                    <div className="image" tabIndex={-1}>
+                    <div ref={observe} className="image" tabIndex={-1}>
                         <Image
                             src={getFileLink(beat.image.key)}
-                            alt={beat.image.name}
+                            className="img"
+                            alt={`cover de l'instrumental ${beat.image.name}`}
                             layout="fill"
                             objectFit="cover"
                             placeholder="blur"
@@ -22,7 +23,7 @@ export const Card = ({beat}: {beat?: Beats}) => {
                         />
                         <div className="option">
                             <div className="icones">
-                                <button className="icon">
+                                <button className="icon" aria-label="voir plus de detail">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -38,7 +39,9 @@ export const Card = ({beat}: {beat?: Beats}) => {
                                 </button>
                                 <button
                                     onClick={() => toggleAudioUrl(beat)}
-                                    className="icon">
+                                    className="icon"
+                                    aria-label="lancer la lecture de la musique"
+                                    >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -52,7 +55,7 @@ export const Card = ({beat}: {beat?: Beats}) => {
                                             d="M9.525 18.025q-.5.325-1.013.037Q8 17.775 8 17.175V6.825q0-.6.512-.888q.513-.287 1.013.038l8.15 5.175q.45.3.45.85t-.45.85Z"></path>
                                     </svg>
                                 </button>
-                                <button className="icon">
+                                <button className="icon" aria-label="ajouter au panier">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -119,9 +122,10 @@ export const Card = ({beat}: {beat?: Beats}) => {
                     position: relative;
                     width: 100%;
                     height: 100%;
-                    min-height: 250px;
-                    max-height: 300px;
+                    min-height: 300px;
+                    max-height: 310px;
                 }
+
 
                 .option {
                     position: absolute;
@@ -181,19 +185,22 @@ export const Card = ({beat}: {beat?: Beats}) => {
                     top: 0;
                 }
                 .price {
-                    background: var(--primary, ${theme.colors.primary});
-                    color: var(--secondary, ${theme.colors.secondary});
                     position: absolute;
                     bottom: 0;
                     left: 0;
-                    padding: 2px 20px;
+                    padding: 2px;
+                    display: flex;
+                    justify-content: center;
                     width: 65px;
                     height: 20px;
                     font-size: 10px;
+                    background: var(--primary);
+                    color: #0a0a0a;
+                    font-weight: 700;
                 }
                 .info {
                     font-size: 10px;
-                    color: rgba(107, 107, 107, 0.6);
+                    color: #595959;
                 }
                 .title {
                     font-size: 12px;
@@ -238,3 +245,5 @@ export const Card = ({beat}: {beat?: Beats}) => {
         </>
     );
 };
+
+

@@ -31,7 +31,6 @@ export const Button = ({
                 onClick={click}
                 disabled={disabled}
                 className="btn"
-                id={type}
                 type={type !== "submit" ? "button" : "submit"}
                 name={type}>
                 {text}
@@ -46,8 +45,9 @@ export const Button = ({
                         width: ${sizeWidth};
                         border: ${border};
                         height: 100%;
-                        font-size: 0.9rem;
-                        font-weight: bold;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        letter-spacing: 0.2px;
                         min-height: 50px;
                         max-width: 200px;
                         cursor: pointer;
@@ -64,7 +64,7 @@ export const Button = ({
                     }
                     @media only screen and (max-width: 1024px) {
                         button.btn {
-                            font-size: 0.5rem;
+                            font-size: 0.55rem;
                             max-width: 100px;
                             min-height: 35px;
                         }

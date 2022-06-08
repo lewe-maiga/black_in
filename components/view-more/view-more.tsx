@@ -13,7 +13,9 @@ export const ViewMore = ({backward, forward}: ViewMoreProps) => {
                 <button
                     name="backward"
                     onClick={backward}
-                    className="btn backward">
+                    className="btn backward"
+                    aria-label="liste precedente"
+                    >
                     <div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +36,9 @@ export const ViewMore = ({backward, forward}: ViewMoreProps) => {
                 <button
                     name="forward"
                     onClick={forward}
-                    className="btn forward">
+                    className="btn forward"
+                    aria-label="liste suivante"
+                    >
                     <div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +75,7 @@ export const ViewMore = ({backward, forward}: ViewMoreProps) => {
                     .view-more .btn div {
                         background: #fff;
                         display: flex;
+                        margin-left: 4px;
                         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
                     }
                     .forward div svg {
@@ -85,14 +90,16 @@ export const ViewMore = ({backward, forward}: ViewMoreProps) => {
                     }
                     .view-more .btn svg {
                         fill: rgba(107, 107, 107, 0.8);
-                        width: 30px;
-                        height: 25px;
+                        width: 43px;
+                        height: 43px;
                         border: 1px solid rgba(107, 107, 107, 0.2);
                     }
                     svg .arrow {
                         width: 15px;
                         height: 10px;
                     }
+
+           
                 `}
             </style>
         </>

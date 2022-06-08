@@ -115,7 +115,9 @@ export const File = ({
                             <button
                                 type="button"
                                 className="edit"
-                                onClick={toggleActive}>
+                                onClick={toggleActive} 
+                                aria-label="mettre à jour l'image">
+                                
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     xmlnsXlink="http://www.w3.org/1999/xlink"

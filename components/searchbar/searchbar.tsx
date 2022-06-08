@@ -42,6 +42,7 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                             className="close"
                             onClick={onClose}
                             name="close"
+                            aria-label="fermer la barre de recherche"
                         />
                     </div>
                     <div className="searchbar">
@@ -50,7 +51,9 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                             value={searchText}
                             className="text"
                             onChange={searchTextChange}
+                            id="searchText"
                         />
+                        <label htmlFor="searchText">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -61,6 +64,7 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                             viewBox="0 0 24 24">
                             <use xlinkHref="#icon"> </use>
                         </svg>
+                        </label>
                     </div>
                 </div>
                 <div className="filter">
@@ -71,7 +75,7 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                                     <span className="image">
                                         <Image
                                             src={`/api/upload/${beat.image.key}`}
-                                            alt=""
+                                            alt={`cover de l'instrumental ${beat.image.name} contenant la chaine ${searchText}`}
                                             objectFit="cover"
                                             layout="fill"
                                         />
@@ -102,7 +106,6 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                     padding-top: 1rem;
                     margin-bottom: 20px;
                     z-index: 10;
-                    background: #fff;
                     height: 120px;
                 }
                 .search-list {
@@ -154,11 +157,16 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                     left: -100%;
                     width: 100%;
                     height: 100%;
-                    background: #fff;
+                    background: #fff8f8;
                     z-index: 100;
                     padding: 0 1rem;
                     transition: 0.4s;
                     max-width: 700px;
+                    max-height: 500px;
+                    border-radius: 20px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
                 }
 
                 .close {
@@ -200,17 +208,36 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                     top: 70%;
                     transform: translate(-50%, -50%);
                     border: 2px solid var(--ternary);
-                    border-radius: 20px;
+                    border-radius: 28px;
                     padding: 5px;
-                    max-width: 250px;
+                    max-width: 260px;
+                    
                 }
 
                 .searchbar .text {
                     border: none;
-                    padding: 2px;
+                    padding: 2px 5px;
                     width: 100%;
                     text-overflow: ellipsis;
                 }
+                .searchbar label{
+                    display: flex;
+                    width: 30px;
+                    min-width: 30px;
+                    background: var(--primary);
+                    height: 30px;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    
+
+                }
+                .searchbar label svg{
+                    width: 15px;
+                    height: 15px;
+                    color: #fff8f8;
+                }
+                
 
                 .text:focus {
                     outline: none;
@@ -232,11 +259,7 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                 }
 
                 .search-container {
-                    max-height: 500px;
-                    border-radius: 20px;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
+                    
                 }
                 .background {
                     display: flex;
@@ -250,34 +273,13 @@ export const SearchBar = ({onClose, active}: SearchBarProps) => {
                     opacity: 0.8;
                 }
 
-                /* @media only screen and (min-width: 700px) {
-                    .search-container.active {
-                        left: -100%;
+                @media only screen and (max-width: 500px) {
+                    .search-container{
+                        border-radius: 0;
+                        max-height: 100vh;
                     }
-                    .search-container.active ~ .background {
-                        display: none;
-                        visibility: hidden;
-                    }
-
-                    .search-container {
-                        max-height: 500px;
-                        border-radius: 20px;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                    }
-                    .background {
-                        display: flex;
-                        visibility: visible;
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: #000;
-                        opacity: 0.8;
-                    }
-                } */
+                   
+                }
             `}</style>
 
             <style jsx global>
