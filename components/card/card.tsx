@@ -1,17 +1,15 @@
 import type {Beats} from "@database/models/beats";
 import Image from "next/image";
-import useDimensions from "react-cool-dimensions"
 import {useAudioContext} from "@components/audio/hooks";
 import { getFileLink } from "@lib/utils";
 
 export const Card = ({beat}: {beat?: Beats}) => {
-    const {observe, width} = useDimensions()
     const {toggleAudioUrl} = useAudioContext();
     return (
         <>
             {beat ? (
                 <li className="card">
-                    <div ref={observe} className="image" tabIndex={-1}>
+                    <div className="image" tabIndex={-1}>
                         <Image
                             src={getFileLink(beat.image.key)}
                             className="img"

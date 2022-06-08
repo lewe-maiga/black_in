@@ -18,6 +18,7 @@ const Layout = ({title, description, children}: LayoutProps) => {
                     content="width=device-width, initial-scale=1"
                 />
                 <meta name="description" content={description} />
+                <meta name="robots" content="noindex,nofollow" />
                 <link
                     rel="shortcut icon"
                     href="/icon.ico"

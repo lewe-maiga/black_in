@@ -64,17 +64,17 @@ export const Header = () => {
                     <ul className={`${active ? "active" : ""} menu`}>
                         <li className="menu-item">
                             <Link href="/">
-                                <a className="link">accueil</a>
+                                <a className="link" onClick={() => setActive(false)}>accueil</a>
                             </Link>
                         </li>
                         <li className="menu-item">
                             <Link href="/catalogue">
-                                <a className="link">catalogue</a>
+                                <a className="link" onClick={() => setActive(false)}>catalogue</a>
                             </Link>
                         </li>
                         <li className="menu-item">
                             <Link href="/about-me">
-                                <a className="link">a-propos</a>
+                                <a className="link" onClick={()=> setActive(false)}>a-propos</a>
                             </Link>
                         </li>
                     </ul>
