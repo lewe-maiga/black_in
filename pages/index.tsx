@@ -38,7 +38,7 @@ const Home = ({description, beats, artists}: HomeProps) => {
             <section className="description main">
                 <Slider beats={beats} />
                 <div className="content">
-                    <h2 className="heading_main">{description.heading_main}</h2>
+                    <h1 className="heading_main">{description.heading_main}</h1>
                     <p className="content_main">{description.content_main}</p>
                     <div className="btn-container">
                         <span className="btn">
@@ -72,9 +72,9 @@ const Home = ({description, beats, artists}: HomeProps) => {
                 </section>
                 <section className="description secondary">
                     <div className="content">
-                        <h2 className="heading_secondary">
+                        <h1 className="heading_secondary">
                             {description.heading_secondary}
-                        </h2>
+                        </h1>
                         <p className="content_secondary">
                             {description.content_secondary}
                         </p>
