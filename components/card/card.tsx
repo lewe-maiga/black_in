@@ -3,11 +3,11 @@ import Image from "next/image";
 import {useAudioContext} from "@components/audio/hooks";
 import { getFileLink } from "@lib/utils";
 
-export const Card = ({beat}: {beat?: Beats}) => {
+export const Card = ({beat}: {beat: Beats}) => {
     const {toggleAudioUrl} = useAudioContext();
     return (
         <>
-            {beat ? (
+            
                 <li className="card">
                     <div className="image" tabIndex={-1}>
                         <Image
@@ -97,22 +97,14 @@ export const Card = ({beat}: {beat?: Beats}) => {
                         </span>
                     </div>
                 </li>
-            ) : (
-                <>
-                    <li className="card">
-                        <div className="image skeleton-anim"></div>
-                        <div className="content">
-                            <h3 className="skeleton-title skeleton-anim"></h3>
-                            <span className="skeleton-info skeleton-anim"></span>
-                        </div>
-                    </li>
-                </>
-            )}
+             
+            
             <style jsx>{`
+                
                 .card {
                     display: flex;
                     flex-direction: column;
-                    ${beat && "animation: view 0.6s ease-out;"}
+                    animation: view 0.6s ease-out;
                     overflow: hidden;
                 }
                 .image {
@@ -208,32 +200,7 @@ export const Card = ({beat}: {beat?: Beats}) => {
                 .content {
                     padding: 15px 0 0;
                 }
-                .image.skeleton-anim {
-                    animation: skeleton 0.8s ease-in-out infinite alternate;
-                }
-
-                .skeleton-title,
-                .skeleton-info {
-                    background: #4c4c4c;
-                    animation: skeleton 0.8s ease-in-out infinite alternate;
-                    width: 60%;
-                }
-                .skeleton-title {
-                    height: 20px;
-                    width: 90%;
-                    margin: 0.2rem 0.5rem 0.2rem 0;
-                }
-                .skeleton-info {
-                    display: inline-block;
-                    margin-top: 10px;
-                    height: 10px;
-                }
-
-                @keyframes skeleton {
-                    to {
-                        opacity: 0.6;
-                    }
-                }
+                
                 @keyframes view {
                     from {
                         transform: scale(0);

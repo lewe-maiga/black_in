@@ -1,7 +1,7 @@
 import {cssUnitHelper} from "@lib/utils"
 import {MouseEventHandler} from "react"
 
-type ButtonProps = {
+export type ButtonProps = {
     disabled?: boolean
     type?: string
     text: string

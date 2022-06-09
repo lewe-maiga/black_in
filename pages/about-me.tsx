@@ -1,31 +1,22 @@
-import {AudioProvider} from "@components/audio/provider";
-import {Container} from "@components/container/container";
-import {Header} from "@components/layout/header";
-import {ReactElement} from "react";
-
-
+import { MainLayout } from "@components/layout/main-layout";
+import { ReactElement } from "react";
 
 const AboutMe = () => {
-    return (
-        <>
-            <div></div>
+	return (
+		<>
+			<div></div>
 
-            <style jsx>{``}</style>
-        </>
-    );
+			<style jsx>{``}</style>
+		</>
+	);
 };
 
 AboutMe.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <>
-            <Header />
-            <AudioProvider>
-                <Container>
-                    <>{page}</>
-                </Container>
-            </AudioProvider>
-        </>
-    );
+	return (
+		<>
+			<MainLayout>{page}</MainLayout>
+		</>
+	);
 };
 
 export default AboutMe;

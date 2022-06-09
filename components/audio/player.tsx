@@ -6,7 +6,7 @@ import {Bar} from "./bar";
 import {Control} from "./control";
 import {useAudio} from "./hooks";
 
-type PlayerProps = {track: Beats};
+export type PlayerProps = {track: Beats};
 
 export const Player = ({track}: PlayerProps) => {
     //music attribut

@@ -4,6 +4,7 @@ import {useState} from "react";
 import useSWR from "swr";
 import type {Beats} from "@database/models/beats";
 import {Card} from "./card";
+import { SkeleTon } from "./skeleton";
 
 type Opts = {
     start: number;
@@ -13,7 +14,7 @@ type Opts = {
 const dataSlice = (data: Array<Beats>, opts: Opts) =>
     data.slice(opts.start, opts.end);
 
-type CardProps = {
+export type CardsProps = {
     start?: number;
     type?: string;
     end?: number;
@@ -27,7 +28,7 @@ export const Cards = ({
     type = "",
     text = "",
     endpoint = "/api/beats",
-}: CardProps) => {
+}: CardsProps) => {
     const [opts, setOpts] = useState({start, end});
     const {data, error} = useSWR(`${endpoint}?${type}`, fetcher);
 
@@ -54,16 +55,16 @@ export const Cards = ({
                 </span>
                 <ViewMore backward={handleBackward} forward={handleForward} />
             </div>
-
-            <ul className="card-grid">
                 {!data
-                    ? Array(opts.end)
-                          .fill(null)
-                          .map((_, index) => <Card key={index + 1} />)
-                    : dataSlice(data.beats, opts).map((beat) => (
+                    ? <SkeleTon howMuch={opts.end} />
+                    : <>
+                        <ul className="card-grid">
+                            {dataSlice(data.beats, opts).map((beat) => (
                           <Card beat={beat} key={beat._id} />
-                      ))}
-            </ul>
+                            ))}
+                        </ul>
+                    </>
+                }
             <style jsx>
                 {`
                     .card-container {

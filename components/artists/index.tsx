@@ -16,7 +16,7 @@ const dataSlice = (data: Array<Artist>, opts: Opts) =>
     data.slice(opts.start, opts.end);
 
 
-type ArtistsProps = {
+export type ArtistsProps = {
     artists: Artist[],
     start?: number;
     end?: number;

@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useReducer, useState} from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState} from "react";
 
 function reducer(
     state: {isRunning: boolean; msg?: string},
@@ -57,4 +57,24 @@ export function useToken() {
         [setState]
     );
     return {token: state?.token, _id: state?._id, saveToken};
+}
+
+
+export function useOnScreen(){
+    const ref = useRef(null)
+    const [isIntersecting, setIntersecting] = useState(false);
+
+    useEffect(()=>{
+        const observer = new IntersectionObserver(
+            ([entry]) => setIntersecting(entry.isIntersecting)
+        );
+
+        if(ref.current){
+            observer.observe(ref.current)
+        }
+
+
+    }, [])
+    
+    return {ref, isIntersecting}
 }

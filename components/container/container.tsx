@@ -1,7 +1,10 @@
 import {useAudioContext} from "@components/audio/hooks";
-import {Player} from "@components/audio/player";
+import { PlayerProps } from "@components/audio/player";
 import {cssUnitHelper} from "@lib/utils";
+import dynamic from "next/dynamic";
 import {ReactChild, ReactChildren} from "react";
+
+const Player = dynamic<PlayerProps>(() => import("@components/audio/player").then(mod => mod.Player))
 
 type ContainerProps = {
     width?: string | number;
