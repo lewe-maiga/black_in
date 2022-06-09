@@ -1,13 +1,19 @@
 <xml version="1.0" encoding="UTF-8">
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
-       <loc>http://black-in.vercel.app/</loc>
+        <loc>http://black-in.vercel.app/</loc>
+        <priority>0.40</priority>
+        <lastmod>2022-06-09</lastmod>
      </url>
      <url>
-       <loc>http://black-in.vercel.app/catalogue</loc>
+        <loc>http://black-in.vercel.app/catalogue</loc>
+        <priority>0.40</priority>
+        <lastmod>2022-06-09</lastmod>
      </url>
      <url>
-       <loc>http://black-in.vercel.app/about-me</loc>
+        <loc>http://black-in.vercel.app/about-me</loc>
+        <priority>0.40</priority>
+        <lastmod>2022-06-09</lastmod>
      </url>
    </urlset>
    </xml>
