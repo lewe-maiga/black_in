@@ -1,6 +1,6 @@
 #Allow all crowlers for /api and /admin
 User-agent: *
-Disallow: /api/*
-Disallow: /admin/*
+Disallow: /api
+Disallow: /admin
 Allow: /
 Sitemap: https://black-in.vercel.app/sitemap.xml 
